@@ -51,7 +51,7 @@ It solves a couple problems in the native range `a:b-1` of Julia:
     > for i = rev(to(0x00, 0x04))
         print(i, ' ')
       end
-    2 1 0
+    3 2 1 0
     ```
 3. Ability to construct an empty range `to(0x00, 0x00)`.
 

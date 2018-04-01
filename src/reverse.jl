@@ -1,5 +1,5 @@
-struct Reverse
-    it
+struct Reverse{T}
+    it::T
 end
 
 rev(it) = Reverse(it)
