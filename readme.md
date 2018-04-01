@@ -1,16 +1,15 @@
-Some ideas about ranges in Julia. The package provides
+Some ideas about ranges of integers in Julia. The package provides half-open ranges:
 
 ```julia
-to(a, b) # HalfOpen(a, b)
+RightOpen(a, b)          # [a → b)
+Reverse(RightOpen(a, b)) # [a ← b)
+LeftOpen(a, b)           # (a → b]
+Reverse(LeftOpen(a, b))  # (a ← b]
 ```
 
-which is the non-inclusive range `[a, b)`; and
+and some helper functions `to` and `rev`.
 
-```julia
-rev(to(a, b)) # Reverse(HalfOpen(a, b))
-```
-
-which iterates over the range `[a, b)` from `b-1` back to `a` inclusive. For example:
+For example:
 
 ```julia
 > using Ranges
@@ -18,6 +17,10 @@ which iterates over the range `[a, b)` from `b-1` back to `a` inclusive. For exa
     print(i, ' ')
   end
 0 1 2 3 4
+> for i = LeftOpen(0, 5)
+    print(i, ' ')
+  end
+1 2 3 4 5
 ```
 
 ```julia
@@ -25,6 +28,10 @@ which iterates over the range `[a, b)` from `b-1` back to `a` inclusive. For exa
     print(i, ' ')
   end
 4 3 2 1 0
+> for i = rev(LeftOpen(0, 5)
+    print(i, ' ')
+  end
+5 4 3 2 1
 ```
 
 It solves a couple problems in the native range `a:b-1` of Julia:

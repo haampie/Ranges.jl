@@ -2,13 +2,15 @@ module Ranges
 
 import Base: start, next, done, length
 
-export HalfOpen, Reverse, rev, to
+export LeftOpen, RightOpen, Reverse, rev, to
 
-const SmallInts = Union{Int8,Int16,Int32,UInt8,UInt16,UInt32}
-const SupportedInts = Int == Int64 ? Union{SmallInts,Int64,UInt64} : SmallInts
+const SmallInts = (Int8,Int16,Int32,UInt8,UInt16,UInt32)
+const AllInts = Int == Int64 ? (SmallInts...,Int64,UInt64) : SmallInts
+const SupportedInts = Union{AllInts...}
 
 include("reverse.jl")
 include("half_open.jl")
+include("helper_functions.jl")
 include("show.jl")
 
 end
