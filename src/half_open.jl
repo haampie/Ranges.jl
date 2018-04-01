@@ -9,6 +9,10 @@ struct HalfOpenState{T<:SupportedInts}
     hi::T
 end
 
+# Constructor that ensures lo ≤ hi
+to(lo::T, hi::T) where {T<:SupportedInts} = HalfOpen(lo, max(lo, hi))
+to(lo, hi) = →(promote(lo, hi)...)
+
 # Will never overflow in the case of half-open ranges :)
 length(r::HalfOpen) = (unsigned(r.hi) - unsigned(r.lo)) % UInt
 
