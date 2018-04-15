@@ -7,13 +7,13 @@ LeftOpen(a, b)           # (a → b]
 Reverse(LeftOpen(a, b))  # (a ← b]
 ```
 
-and some helper functions `to` and `rev`.
+and some helper functions `a : until : b` and `b : downuntil : a`.
 
 For example:
 
 ```julia
 > using Ranges
-> for i = to(0, 5)
+> for i = 0 : until : 5
     print(i, ' ')
   end
 0 1 2 3 4
@@ -24,11 +24,11 @@ For example:
 ```
 
 ```julia
-> for i = rev(to(0, 5))
+> for i = rev(RightOpen(0, 5))
     print(i, ' ')
   end
 4 3 2 1 0
-> for i = rev(LeftOpen(0, 5)
+> for i = 5 : downuntil : 0
     print(i, ' ')
   end
 5 4 3 2 1
@@ -36,14 +36,14 @@ For example:
 
 It solves a couple problems in the native range `a:b-1` of Julia:
 
-1. No overflow of `length(to(a, b))` by using `UInt`s.
+1. No overflow of `length(a : until : b)` by using `UInt`s.
     ```julia
     > length(-10:typemax(Int))
     ERROR: OverflowError()
     ```
     vs
     ```julia
-    > length(to(-10, typemax(Int)))
+    > length(-10 : until : typemax(Int))
     0x8000000000000009
     ```
 2. Iterate over unsigned integers in reverse order.
@@ -55,11 +55,11 @@ It solves a couple problems in the native range `a:b-1` of Julia:
     ```
     vs
     ```julia
-    > for i = rev(to(0x00, 0x04))
+    > for i = rev(0x00 : until : 0x04)
         print(i, ' ')
       end
     3 2 1 0
     ```
-3. Ability to construct an empty range `to(0x00, 0x00)`.
+3. Ability to construct an empty range `0x00 : until : 0x00`.
 
 At the moment one cannot iterate all the way from `typemin(IntT)` to `typemax(IntT)` inclusive; but this issue is best fixed with the new iterator protocol in Julia 1.0 combined which makes implementing a `ClosedRange` type a breeze.

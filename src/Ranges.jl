@@ -1,8 +1,8 @@
 module Ranges
 
-import Base: start, next, done, length
+import Base: start, next, done, length, (:)
 
-export LeftOpen, RightOpen, Reverse, rev, to
+export LeftOpen, RightOpen, Reverse, rev
 
 const SmallInts = (Int8,Int16,Int32,UInt8,UInt16,UInt32)
 const AllInts = Int == Int64 ? (SmallInts...,Int64,UInt64) : SmallInts
